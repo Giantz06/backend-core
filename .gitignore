@@ -1,0 +1,26 @@
+# Thư viện tải về - dựng lại bằng `npm install`
+node_modules/
+
+# Biến môi trường / thông tin nhạy cảm
+.env
+.env.local
+.env.*.local
+
+# Log
+*.log
+npm-debug.log*
+yarn-error.log*
+
+# Thư mục build / kết quả test (nếu sau này có)
+dist/
+build/
+coverage/
+
+# File rác của hệ điều hành
+.DS_Store
+Thumbs.db
+
+# Cấu hình riêng của editor
+.vscode/
+.idea/
+.claude
