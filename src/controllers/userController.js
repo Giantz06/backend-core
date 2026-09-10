@@ -3,7 +3,6 @@ import { parseBody } from "../utils/body.js";
 import {
   getAllUsers,
   getUserById,
-  createUser as createUserInService,
   updateUser as updateUserInService,
   deleteUser as deleteUserInService,
 } from "../service/userService.js";
@@ -16,14 +15,6 @@ export async function getUsers(req, res) {
 export async function getUser(req, res, userId) {
   const user = await getUserById(userId);
   sendJson(res, 200, user);
-}
-
-export async function createUser(req, res) {
-  const body = await parseBody(req);
-  const data = parseJsonBody(body);
-
-  const newUser = await createUserInService(data);
-  sendJson(res, 201, newUser);
 }
 
 export async function updateUser(req, res, userId) {

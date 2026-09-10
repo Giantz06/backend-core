@@ -2,7 +2,7 @@ import { pool } from "../config/database.js";
 
 export async function getAllUsers() {
   const result = await pool.query(
-    "SELECT * FROM users"
+    "SELECT id, name, age, email FROM users"
   );
 
   return result.rows;
@@ -10,7 +10,7 @@ export async function getAllUsers() {
 
 export async function getUserById(userId) {
   const result = await pool.query(
-    "SELECT * FROM users WHERE id = $1",
+    "SELECT id, name, age, email FROM users WHERE id = $1",
     [userId]
   );
 
@@ -19,36 +19,9 @@ export async function getUserById(userId) {
     err.statusCode = 404;
     throw err;
   }
-  console.log("getUserById result:", result.rows[0]);
+
   return result.rows[0];
 }
-
-export async function createUser(data) {
-  if (!validateUser(data)) {
-    const err = new Error("Invalid user data");
-    err.statusCode = 400;
-    throw err;
-  }
-
-  try {
-    const result = await pool.query(
-      "INSERT INTO users (name, age) VALUES ($1, $2) RETURNING *",
-      [data.name, data.age]
-    );
-
-    return result.rows[0];
-
-  } catch (err) {
-    if (err.code === "23505") {
-      const error = new Error("User name already exists");
-      error.statusCode = 400;
-      throw error;
-    }
-
-    throw err;
-  }
-}
-
 
 export async function updateUser(userId, data) {
   if (!validateUser(data)) {
@@ -61,7 +34,7 @@ export async function updateUser(userId, data) {
     `UPDATE users
      SET name = $1, age = $2
      WHERE id = $3
-     RETURNING *`,
+     RETURNING id, name, age, email`,
     [data.name, data.age, userId]
   );
 
@@ -76,7 +49,7 @@ export async function updateUser(userId, data) {
 
 export async function deleteUser(userId) {
   const result = await pool.query(
-    "DELETE FROM users WHERE id = $1 RETURNING *",
+    "DELETE FROM users WHERE id = $1 RETURNING id",
     [userId]
   );
 

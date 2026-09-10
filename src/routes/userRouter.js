@@ -2,7 +2,6 @@ import { sendJson } from "../utils/response.js";
 import {
   getUsers,
   getUser,
-  createUser,
   updateUser,
   deleteUser,
 } from "../controllers/userController.js";
@@ -30,10 +29,7 @@ function handleCollection(req, res) {
     return getUsers(req, res);
   }
 
-  if (req.method === "POST") {
-    return createUser(req, res);
-  }
-
+  // Tao user do POST /auth/register dam nhiem, khong tao qua /users nua
   sendJson(res, 405, { message: "Method not allowed" });
 }
 

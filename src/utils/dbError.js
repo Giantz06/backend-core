@@ -13,6 +13,7 @@ const PG_ERRORS = {
 // Message riêng theo tên ràng buộc, để giữ được thông báo cụ thể
 const CONSTRAINT_MESSAGES = {
   posts_user_fk: "user_id does not exist",
+  users_email_unique: "Email already exists",
 };
 
 export function mapDbError(err) {
